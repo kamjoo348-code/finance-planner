@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>پلنر مالی</title>
+<link rel="manifest" href="manifest-finance.json">
+<meta name="theme-color" content="#0F766E">
+<link rel="apple-touch-icon" href="icon-finance-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#F2F4F0;--card:#FFFFFF;--text:#14232B;--muted:#6A7A80;--line:#D5DBD3;--ok:#0F766E;--okbg:#D6EEEA;--mark:#E9A23B;--danger:#B42318;--dbg:#FBE4E1;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1A1F;--card:#17262D;--text:#E8EEEA;--muted:#93A4A9;--line:#2B3D45;--ok:#2DD4BF;--okbg:#12403F;--mark:#F2B24D;--danger:#F97066;--dbg:#4A2420;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F1A1F;--card:#17262D;--text:#E8EEEA;--muted:#93A4A9;--line:#2B3D45;--ok:#2DD4BF;--okbg:#12403F;--mark:#F2B24D;--danger:#F97066;--dbg:#4A2420;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Vazirmatn",Tahoma,"Segoe UI",sans-serif;font-size:16px;line-height:1.6;padding-bottom:84px}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+main{max-width:520px;margin:0 auto;padding:14px 16px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.top h1{margin:0;font-size:22px;font-weight:800;text-align:center;flex:1}
+.top h1 small{display:block;font-size:13px;font-weight:400;color:var(--muted)}
+.nav{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:22px;line-height:1}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.kp .card{margin:0}
+.kp small{display:block;color:var(--muted);font-size:13px}
+.kp b{font-size:18px;overflow-wrap:anywhere}
+.in{color:var(--ok)}.out{color:var(--danger)}
+.bal{grid-column:1/-1;background:var(--okbg);border-color:transparent}
+.bal.neg{background:var(--dbg)}
+.fl{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:4px}
+.bar.over i{background:var(--danger)}
+.sub{color:var(--muted);font-size:13px}
+h2{font-size:16px;margin:16px 0 8px}
+.seg{display:flex;gap:6px;margin-bottom:10px}
+.seg button{flex:1;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-weight:600}
+.seg button.act{background:var(--ok);border-color:var(--ok);color:#fff}
+:root:not([data-theme="light"]) .seg button.act,:root:not([data-theme="light"]) .btn{color:#06201E}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.f input,.f select{height:48px;min-width:0;width:100%;border:1px solid var(--line);border-radius:12px;padding:0 12px;background:var(--bg);color:var(--text)}
+.f .w{grid-column:1/-1}
+.btn{height:48px;padding:0 18px;border:0;border-radius:12px;background:var(--ok);color:#fff;font-weight:600;width:100%;margin-top:8px}
+.tx{display:flex;align-items:center;gap:10px;padding:10px 14px;margin-bottom:8px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.tx .m{flex:1;min-width:0;overflow-wrap:anywhere}
+.tx b{white-space:nowrap}
+.del{border:0;background:none;color:var(--muted);font-size:13px;padding:6px;text-decoration:underline}
+.empty{text-align:center;color:var(--muted);padding:24px 8px}
+.bi{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.bi span{flex:1}
+.bi input{width:140px;height:44px;border:1px solid var(--line);border-radius:12px;padding:0 12px;background:var(--card);color:var(--text);text-align:left}
+.tabs{position:fixed;inset:auto 0 0 0;display:flex;background:var(--card);border-top:1px solid var(--line);padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs button{flex:1;height:48px;border:0;background:none;font-weight:600;color:var(--muted);border-radius:12px}
+.tabs button.act{color:var(--ok);background:var(--okbg)}
+:focus-visible{outline:3px solid var(--mark);outline-offset:2px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<nav class="tabs"><button id="t1" onclick="setTab('sum')">خلاصه</button><button id="t2" onclick="setTab('tx')">تراکنش‌ها</button><button id="t3" onclick="setTab('bud')">بودجه</button></nav>
+<script>
+var KEY='finance_v1',S=null,tab='sum',ft='e';
+try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!S||!S.tx)S={tx:[],bud:{},nid:1};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var MN=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+var EC=['مسکن','خوراک','حمل‌ونقل','قبوض','سلامت','آموزش','تفریح','پوشاک','قسط و بدهی','پس‌انداز','سایر'];
+var IC=['حقوق','پروژه و فریلنس','سایر درآمد'];
+function fa(n){return Number(n).toLocaleString('fa-IR')}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function num(s){s=String(s).replace(/[۰-۹]/g,function(c){return c.charCodeAt(0)-1776}).replace(/[٠-٩]/g,function(c){return c.charCodeAt(0)-1632}).replace(/[,٬،\s]/g,'');var v=parseFloat(s);return isNaN(v)?0:v}
+function getToday(){try{var p=new Intl.DateTimeFormat('fa-IR-u-ca-persian-nu-latn',{year:'numeric',month:'numeric',day:'numeric'}).formatToParts(new Date());var g=function(t){return parseInt(p.filter(function(x){return x.type===t})[0].value,10)};var r={y:g('year'),m:g('month'),d:g('day')};if(r.y>1300&&r.m&&r.d)return r}catch(e){}return{y:1405,m:1,d:1}}
+var T=getToday(),vy=T.y,vm=T.m;
+function mlen(y,m){return m<=6?31:m<=11?30:([1,5,9,13,17,22,26,30].indexOf(y%33)>-1?30:29)}
+function mtx(){return S.tx.filter(function(x){return x.y===vy&&x.m===vm})}
+function sums(){var i=0,o=0,by={};mtx().forEach(function(x){if(x.t==='i')i+=x.a;else{o+=x.a;by[x.c]=(by[x.c]||0)+x.a}});return{i:i,o:o,by:by}}
+function shift(n){vm+=n;if(vm>12){vm=1;vy++}if(vm<1){vm=12;vy--}render()}
+function setTab(t){tab=t;render()}
+function setType(t){ft=t;render()}
+function addTx(){var a=num(document.getElementById('fa').value);if(a<=0){document.getElementById('fa').focus();return}
+  var d=parseInt(num(document.getElementById('fd').value),10)||1;d=Math.min(Math.max(d,1),mlen(vy,vm));
+  S.tx.push({id:S.nid++,t:ft,c:document.getElementById('fc').value,a:a,n:document.getElementById('fn').value.trim().slice(0,60),y:vy,m:vm,d:d});save();render()}
+function delTx(id){if(!confirm('این تراکنش حذف شود؟'))return;S.tx=S.tx.filter(function(x){return x.id!==id});save();render()}
+function setBud(c,v){S.bud[c]=num(v);save()}
+function head(sub){return '<div class="top"><button class="nav" aria-label="ماه قبل" onclick="shift(-1)">›</button><h1>'+MN[vm-1]+' '+fa(vy).replace(/٬/g,'')+'<small>'+sub+'</small></h1><button class="nav" aria-label="ماه بعد" onclick="shift(1)">‹</button></div>'}
+function render(){
+  ['sum','tx','bud'].forEach(function(t,i){document.getElementById('t'+(i+1)).className=tab===t?'act':''});
+  var s=sums(),h;
+  if(tab==='sum'){
+    var bal=s.i-s.o,rate=s.i?Math.round(bal/s.i*100):0;
+    h=head('خلاصهٔ مالی ماه')+'<div class="kp"><div class="card"><small>درآمد</small><b class="in">'+fa(s.i)+'</b></div><div class="card"><small>هزینه</small><b class="out">'+fa(s.o)+'</b></div><div class="card bal'+(bal<0?' neg':'')+'"><small>مانده (درآمد − هزینه)</small><b>'+fa(bal)+'</b><div class="sub">نرخ پس‌انداز: '+fa(rate)+'٪</div></div></div><div class="sub" style="margin:-4px 0 6px">مبالغ به تومان</div><h2>هزینه به تفکیک دسته</h2>';
+    var any=false;
+    EC.forEach(function(c){var sp=s.by[c]||0,b=S.bud[c]||0;if(!sp&&!b)return;any=true;var p=b?Math.min(Math.round(sp/b*100),100):0,ov=b&&sp>b;
+      h+='<div class="card"><div class="fl"><span>'+c+'</span><b>'+fa(sp)+(b?' از '+fa(b):'')+'</b></div>'+(b?'<div class="bar'+(ov?' over':'')+'"><i style="width:'+p+'%"></i></div><div class="sub">'+(ov?'<span class="out">'+fa(sp-b)+' بیشتر از بودجه</span>':fa(b-sp)+' باقی‌مانده')+'</div>':'')+'</div>'});
+    if(!any)h+='<div class="empty">هنوز هزینه‌ای ثبت نشده. از برگهٔ «تراکنش‌ها» شروع کن.</div>';
+  }else if(tab==='tx'){
+    var cats=ft==='e'?EC:IC,dd=(vy===T.y&&vm===T.m)?T.d:1;
+    h=head('ثبت و فهرست تراکنش‌ها')+'<div class="seg"><button class="'+(ft==='e'?'act':'')+'" onclick="setType(\'e\')">هزینه</button><button class="'+(ft==='i'?'act':'')+'" onclick="setType(\'i\')">درآمد</button></div><div class="card"><div class="f"><input class="w" id="fa" inputmode="numeric" placeholder="مبلغ (تومان)" aria-label="مبلغ"><select id="fc" aria-label="دسته">'+cats.map(function(c){return '<option>'+c+'</option>'}).join('')+'</select><input id="fd" inputmode="numeric" value="'+dd+'" aria-label="روز ماه" placeholder="روز"><input class="w" id="fn" placeholder="توضیح (اختیاری)" maxlength="60" onkeydown="if(event.key===\'Enter\')addTx()"></div><button class="btn" onclick="addTx()">ثبت</button></div>';
+    var list=mtx().slice().sort(function(a,b){return b.d-a.d||b.id-a.id});
+    if(!list.length)h+='<div class="empty">در این ماه تراکنشی نیست.</div>';
+    list.forEach(function(x){h+='<div class="tx"><div class="m"><div>'+esc(x.c)+(x.n?' · '+esc(x.n):'')+'</div><div class="sub">'+fa(x.d)+' '+MN[x.m-1]+'</div></div><b class="'+(x.t==='i'?'in':'out')+'">'+(x.t==='i'?'+':'−')+fa(x.a)+'</b><button class="del" onclick="delTx('+x.id+')">حذف</button></div>'});
+  }else{
+    h=head('بودجهٔ ماهانهٔ هر دسته')+'<div class="sub" style="margin-bottom:10px">سقف خرج هر دسته را بنویس (تومان). برای همهٔ ماه‌ها یکسان است.</div>';
+    EC.forEach(function(c){h+='<div class="bi"><span>'+c+'</span><input inputmode="numeric" value="'+(S.bud[c]?S.bud[c]:'')+'" placeholder="۰" aria-label="بودجهٔ '+c+'" onchange="setBud(\''+c+'\',this.value)"></div>'});
+  }
+  document.getElementById('app').innerHTML=h;
+}
+render();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(function(){});
+</script>
+</body>
+</html>

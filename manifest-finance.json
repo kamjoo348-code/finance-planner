@@ -1,0 +1,25 @@
+{
+ "name": "پلنر مالی",
+ "short_name": "پلنر مالی",
+ "lang": "fa",
+ "dir": "rtl",
+ "start_url": "./finance-planner.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#F2F4F0",
+ "theme_color": "#0F766E",
+ "icons": [
+  {
+   "src": "icon-finance-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icon-finance-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
